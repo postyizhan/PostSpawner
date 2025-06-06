@@ -70,11 +70,11 @@ PostSpawner 提供了丰富的动作系统，可以在配置文件中使用以�
 在动作中可以使用以下内建变量：
 
 - `%player%` - 玩家名称
-- `%block_type%` - 方块类型
 - `%block_x%` - 方块X坐标
 - `%block_y%` - 方块Y坐标
 - `%block_z%` - 方块Z坐标
 - `%block_world%` - 方块所在世界
+- `%entity_type%` - 实体类型
 
 此外，如果安装了 PlaceholderAPI，还可以使用 PlaceholderAPI 变量。
 

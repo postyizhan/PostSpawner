@@ -21,7 +21,7 @@ class ActionManager(private val plugin: PostSpawner) {
      */
     fun executeActions(player: Player, actions: List<String>, entityType: EntityType? = null, location: org.bukkit.Location? = null) {
         for (action in actions) {
-            val processedAction = replaceVariables(action, player, entityType)
+            val processedAction = replaceVariables(action, player, entityType, location)
             executeAction(player, processedAction, location)
         }
     }
@@ -29,16 +29,22 @@ class ActionManager(private val plugin: PostSpawner) {
     /**
      * 替换动作中的变量
      */
-    private fun replaceVariables(action: String, player: Player, entityType: EntityType?): String {
-        var result = action
-            .replace("%player%", player.name)
-            .replace("%player_uuid%", player.uniqueId.toString())
-            .replace("%world%", player.world.name)
+    private fun replaceVariables(action: String, player: Player, entityType: EntityType?, location: org.bukkit.Location? = null): String {
+        var result = action.replace("%player%", player.name)
+
         
         if (entityType != null) {
             result = result.replace("%entity_type%", entityType.name)
         } else {
             result = result.replace("%entity_type%", "PIG") // 默认为猪
+        }
+        
+        // 添加方块相关变量
+        if (location != null) {
+            result = result.replace("%block_x%", location.blockX.toString())
+            result = result.replace("%block_y%", location.blockY.toString())
+            result = result.replace("%block_z%", location.blockZ.toString())
+            result = result.replace("%block_world%", location.world.name)
         }
         
         // 如果启用了PlaceholderAPI，则替换其占位符
