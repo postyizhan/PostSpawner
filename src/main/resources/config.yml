@@ -10,11 +10,6 @@ update-checker:
 # 语言设置 (目前支持: zh_CN, en_US)
 language: zh_CN
 
-# 消息相关
-messages:
-  version-info: "&8[&3Post&bSpawner&8] &7版本: &f%version%"
-  update-checking: "&8[&3Post&bSpawner&8] &7正在检查更新..."
-
 # 刷怪笼挖掘设置
 spawner:
   # 基础挖掘失败的概率 (0.0-1.0)
@@ -44,6 +39,7 @@ spawner:
   fail-actions:
     - "[message] &c挖掘刷怪笼失败！"
     - "[sound] BLOCK_ANVIL_LAND 1.0 1.0"
+    - "[buff] MINING_FATIGUE 10 1"
     - "[title] &c挖掘失败 &7刷怪笼碎裂了"
 
   # 当玩家使用精准采集工具挖掘刷怪笼时执行的动作
@@ -53,4 +49,4 @@ spawner:
     - "[buff] SPEED 10 1"
 
 # 调试模式
-debug: true
+debug: false

@@ -70,9 +70,7 @@ class CommandManager(private val plugin: PostSpawner) : CommandExecutor, TabComp
                     return true
                 }
                 // 从配置文件读取检查更新提示
-                val updateChecking = plugin.getConfigManager().getConfig().getString("system.updater.update_checking")
-                    ?: "&8[&3Post&bSpawner&8] &7Checking for updates..."
-                sender.sendMessage(MessageUtil.color(updateChecking))
+                sender.sendMessage(MessageUtil.color(MessageUtil.getMessage("system.updater.update_checking")))
                 if (sender is Player) {
                     plugin.sendUpdateInfo(sender)
                 } else {

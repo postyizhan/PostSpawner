@@ -65,6 +65,8 @@ PostSpawner 提供了丰富的动作系统，可以在配置文件中使用以�
 | `[money] [操作] [数量]` | 控制玩家经济 | `[money] give 100`, `[money] take 200`, `[money] set 50` |
 | `[points] [操作] [数量]` | 控制玩家点券 | `[points] give 100`, `[points] take 200`, `[points] set 50` |
 
+特别的，创造模式下破坏刷怪笼不会执行任何动作。
+
 ### 📊 变量
 
 在动作中可以使用以下内建变量：

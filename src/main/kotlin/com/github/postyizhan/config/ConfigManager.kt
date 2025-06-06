@@ -21,9 +21,9 @@ class ConfigManager(private val plugin: PostSpawner) {
     fun loadAll() {
         loadConfig("config.yml")
         
-        // 检查并加载语言文件
+        // 检查并加载语言文件，重载时不保存语言文件
         val langCode = getConfig().getString("language", "zh_CN") ?: "zh_CN"
-        loadResource("lang/$langCode.yml", "lang.yml")
+        loadResource("lang/$langCode.yml", "lang.yml", false)
     }
     
     /**
@@ -46,22 +46,27 @@ class ConfigManager(private val plugin: PostSpawner) {
     
     /**
      * 从资源文件夹加载配置文件
+     * @param resourcePath 资源文件路径
+     * @param savePath 保存路径
+     * @param saveIfNotExists 如果文件不存在是否保存资源文件，默认为true
      */
-    fun loadResource(resourcePath: String, savePath: String): FileConfiguration {
+    fun loadResource(resourcePath: String, savePath: String, saveIfNotExists: Boolean = true): FileConfiguration {
         val resource: InputStream? = plugin.getResource(resourcePath)
         val file = File(plugin.dataFolder, savePath)
         
-        if (!file.exists()) {
+        if (!file.exists() && saveIfNotExists) {
             file.parentFile.mkdirs()
             if (resource != null) {
                 plugin.saveResource(resourcePath, false)
             }
         }
         
-        val config = if (resource != null) {
+        val config = if (resource != null && !file.exists()) {
+            // 如果文件不存在，从资源加载
             val reader = InputStreamReader(resource, StandardCharsets.UTF_8)
             YamlConfiguration.loadConfiguration(reader)
         } else {
+            // 如果文件存在，从文件加载
             YamlConfiguration.loadConfiguration(file)
         }
         
@@ -83,7 +88,7 @@ class ConfigManager(private val plugin: PostSpawner) {
      * 获取语言配置文件
      */
     fun getLang(): FileConfiguration {
-        return configs["lang"] ?: loadResource("lang/zh_CN.yml", "lang.yml")
+        return configs["lang"] ?: loadResource("lang/zh_CN.yml", "lang.yml", false)
     }
     
     /**
