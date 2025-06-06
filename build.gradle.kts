@@ -35,10 +35,9 @@ dependencies {
     }
     
     // PlaceholderAPI
-    compileOnly("me.clip:placeholderapi:2.11.5")
+    compileOnly("me.clip:placeholderapi:2.11.6")
     
-    // PlayerPoints API - 使用空依赖，我们通过反射调用
-    // 不添加具体依赖，通过反射检测
+    // PlayerPoints API - 通过反射调用
 }
 
 tasks {
