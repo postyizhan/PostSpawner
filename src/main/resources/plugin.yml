@@ -1,4 +1,44 @@
 name: PostSpawner
-version: '1.0-SNAPSHOT'
+version: '${version}'
 main: com.github.postyizhan.PostSpawner
 api-version: '1.21'
+description: A lightweight Minecraft plugin for managing Monster Spawner
+author: postyizhan
+website: https://github.com/postyizhan/PostSpawner
+
+commands:
+  ps:
+    description: PostSpawner主命令
+    usage: /ps <reload/version/help/update>
+    aliases: [postspawner]
+    
+permissions:
+  postspawner.command.reload:
+    description: 允许重载插件配置
+    default: op
+  postspawner.command.version:
+    description: 允许查看插件版本
+    default: true
+  postspawner.command.help:
+    description: 允许查看帮助信息
+    default: true
+  postspawner.command.update:
+    description: 允许检查更新
+    default: op
+  postspawner.use.place:
+    description: 允许放置刷怪笼
+    default: true
+  postspawner.use.break:
+    description: 允许破坏刷怪笼
+    default: true
+  
+  postspawner.admin:
+    description: 管理员权限
+    default: op
+    children:
+      postspawner.command.reload: true
+      postspawner.command.version: true
+      postspawner.command.help: true
+      postspawner.command.update: true
+      postspawner.use.place: true
+      postspawner.use.break: true
