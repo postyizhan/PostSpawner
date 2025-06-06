@@ -30,26 +30,26 @@ class HookManager(private val plugin: PostSpawner) {
         if (Bukkit.getPluginManager().getPlugin("Vault") != null) {
             vaultHook = VaultHook(plugin)
             if (vaultHook!!.isEnabled()) {
-                plugin.logger.info(
-                    MessageUtil.formatMessage(
-                        MessageUtil.getMessage("system.hooks.enabled"),
-                        "Vault"
+                plugin.server.consoleSender.sendMessage(
+                    MessageUtil.color(
+                        MessageUtil.getMessage("system.hooks.enabled")
+                            .replace("{0}", "Vault")
                     )
                 )
             } else {
                 vaultHook = null
-                plugin.logger.warning(
-                    MessageUtil.formatMessage(
-                        MessageUtil.getMessage("system.hooks.disabled"),
-                        "Vault Economy"
+                plugin.server.consoleSender.sendMessage(
+                    MessageUtil.color(
+                        MessageUtil.getMessage("system.hooks.disabled")
+                            .replace("{0}", "Vault Economy")
                     )
                 )
             }
         } else {
-            plugin.logger.info(
-                MessageUtil.formatMessage(
-                    MessageUtil.getMessage("system.hooks.disabled"),
-                    "Vault"
+            plugin.server.consoleSender.sendMessage(
+                MessageUtil.color(
+                    MessageUtil.getMessage("system.hooks.disabled")
+                        .replace("{0}", "Vault")
                 )
             )
         }
@@ -61,17 +61,17 @@ class HookManager(private val plugin: PostSpawner) {
     private fun setupPlayerPoints() {
         if (Bukkit.getPluginManager().getPlugin("PlayerPoints") != null) {
             playerPointsHook = PlayerPointsHook(plugin)
-            plugin.logger.info(
-                MessageUtil.formatMessage(
-                    MessageUtil.getMessage("system.hooks.enabled"),
-                    "PlayerPoints"
+            plugin.server.consoleSender.sendMessage(
+                MessageUtil.color(
+                    MessageUtil.getMessage("system.hooks.enabled")
+                        .replace("{0}", "PlayerPoints")
                 )
             )
         } else {
-            plugin.logger.info(
-                MessageUtil.formatMessage(
-                    MessageUtil.getMessage("system.hooks.disabled"),
-                    "PlayerPoints"
+            plugin.server.consoleSender.sendMessage(
+                MessageUtil.color(
+                    MessageUtil.getMessage("system.hooks.disabled")
+                        .replace("{0}", "PlayerPoints")
                 )
             )
         }
@@ -83,17 +83,17 @@ class HookManager(private val plugin: PostSpawner) {
     private fun setupPlaceholderAPI() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             placeholderAPIHook = PlaceholderAPIHook(plugin)
-            plugin.logger.info(
-                MessageUtil.formatMessage(
-                    MessageUtil.getMessage("system.hooks.enabled"),
-                    "PlaceholderAPI"
+            plugin.server.consoleSender.sendMessage(
+                MessageUtil.color(
+                    MessageUtil.getMessage("system.hooks.enabled")
+                        .replace("{0}", "PlaceholderAPI")
                 )
             )
         } else {
-            plugin.logger.info(
-                MessageUtil.formatMessage(
-                    MessageUtil.getMessage("system.hooks.disabled"),
-                    "PlaceholderAPI"
+            plugin.server.consoleSender.sendMessage(
+                MessageUtil.color(
+                    MessageUtil.getMessage("system.hooks.disabled")
+                        .replace("{0}", "PlaceholderAPI")
                 )
             )
         }
@@ -140,4 +140,4 @@ class HookManager(private val plugin: PostSpawner) {
     fun isPlaceholderAPIEnabled(): Boolean {
         return placeholderAPIHook != null
     }
-} 
+}

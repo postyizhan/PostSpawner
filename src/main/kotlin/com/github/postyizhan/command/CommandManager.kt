@@ -46,8 +46,10 @@ class CommandManager(private val plugin: PostSpawner) : CommandExecutor, TabComp
                     sender.sendMessage(MessageUtil.color(MessageUtil.getMessage("messages.no-permission")))
                     return true
                 }
-                
-                sender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &7版本: &f${plugin.description.version}"))
+                // 从配置文件读取版本信息格式
+                val versionFormat = plugin.getConfigManager().getConfig().getString("messages.version-info")
+                    ?: "&8[&3Post&bSpawner&8] &7版本: &f%version%"
+                sender.sendMessage(MessageUtil.color(versionFormat.replace("%version%", plugin.description.version)))
             }
             
             "help" -> {
@@ -64,8 +66,10 @@ class CommandManager(private val plugin: PostSpawner) : CommandExecutor, TabComp
                     sender.sendMessage(MessageUtil.color(MessageUtil.getMessage("messages.no-permission")))
                     return true
                 }
-                
-                sender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &7正在检查更新..."))
+                // 从配置文件读取检查更新提示
+                val updateChecking = plugin.getConfigManager().getConfig().getString("messages.update-checking")
+                    ?: "&8[&3Post&bSpawner&8] &7正在检查更新..."
+                sender.sendMessage(MessageUtil.color(updateChecking))
                 if (sender is Player) {
                     plugin.sendUpdateInfo(sender)
                 } else {
@@ -117,4 +121,4 @@ class CommandManager(private val plugin: PostSpawner) : CommandExecutor, TabComp
             sender.sendMessage(MessageUtil.color(message))
         }
     }
-} 
+}

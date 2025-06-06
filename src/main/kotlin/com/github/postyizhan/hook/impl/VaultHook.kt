@@ -76,4 +76,4 @@ class VaultHook(private val plugin: PostSpawner) {
         if (!isEnabled()) return 0.0
         return economy!!.getBalance(player)
     }
-} 
+}

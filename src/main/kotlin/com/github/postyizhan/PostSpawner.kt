@@ -54,25 +54,31 @@ class PostSpawner : JavaPlugin() {
         if (configManager.getConfig().getBoolean("update-checker.enabled", true)) {
             updateChecker.checkForUpdates { isUpdateAvailable, newVersion ->
                 if (isUpdateAvailable) {
-                    logger.info(MessageUtil.color(MessageUtil.getMessage("system.updater.update_available")
-                        .replace("{current_version}", description.version)
-                        .replace("{latest_version}", newVersion)))
-                    logger.info(MessageUtil.color(MessageUtil.getMessage("system.updater.update_url")
-                        .replace("{current_version}", description.version)
-                        .replace("{latest_version}", newVersion)))
+                    server.consoleSender.sendMessage(MessageUtil.color(
+                        MessageUtil.getMessage("system.updater.update_available")
+                            .replace("{current_version}", description.version)
+                            .replace("{latest_version}", newVersion)
+                    ))
+                    server.consoleSender.sendMessage(MessageUtil.color(
+                        MessageUtil.getMessage("system.updater.update_url")
+                            .replace("{current_version}", description.version)
+                            .replace("{latest_version}", newVersion)
+                    ))
                 } else {
-                    logger.info(MessageUtil.color(MessageUtil.getMessage("system.updater.up_to_date")))
+                    server.consoleSender.sendMessage(MessageUtil.color(
+                        MessageUtil.getMessage("system.updater.up_to_date")
+                    ))
                 }
             }
         }
 
-        logger.info("PostSpawner 已成功加载.")
+        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &a插件已成功加载. &7版本: &f${description.version}"))
     }
 
     override fun onDisable() {
         HandlerList.unregisterAll(this)
-        logger.info(MessageUtil.getMessage("messages.disabled"))
-        logger.info("PostSpawner 已成功卸载.")
+        server.consoleSender.sendMessage(MessageUtil.color(MessageUtil.getMessage("messages.disabled")))
+        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &c插件已成功卸载."))
     }
     
     /**
@@ -89,12 +95,16 @@ class PostSpawner : JavaPlugin() {
     fun sendUpdateInfo(player: Player) {
         updateChecker.checkForUpdates { isUpdateAvailable, newVersion ->
             if (isUpdateAvailable) {
-                player.sendMessage(MessageUtil.color(MessageUtil.getMessage("system.updater.update_available")
-                    .replace("{current_version}", description.version)
-                    .replace("{latest_version}", newVersion)))
-                player.sendMessage(MessageUtil.color(MessageUtil.getMessage("system.updater.update_url")
-                    .replace("{current_version}", description.version)
-                    .replace("{latest_version}", newVersion)))
+                player.sendMessage(MessageUtil.color(
+                    MessageUtil.getMessage("system.updater.update_available")
+                        .replace("{current_version}", description.version)
+                        .replace("{latest_version}", newVersion)
+                ))
+                player.sendMessage(MessageUtil.color(
+                    MessageUtil.getMessage("system.updater.update_url")
+                        .replace("{current_version}", description.version)
+                        .replace("{latest_version}", newVersion)
+                ))
             } else {
                 player.sendMessage(MessageUtil.color(MessageUtil.getMessage("system.updater.up_to_date")))
             }

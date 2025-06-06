@@ -27,6 +27,14 @@ system:
     update_url: "{prefix}&eVisit: &bhttps://github.com/postyizhan/PostSpawner/releases/latest &eto get the latest version"
     up_to_date: "{prefix}&aYou are using the latest version!"
   debug:
+    action:
+      invalid_sound: "{prefix}&cInvalid sound: %sound%"
+      invalid_item: "{prefix}&cInvalid item: %item%"
+      invalid_effect: "{prefix}&cInvalid potion effect: %effect%"
+      invalid_money_operation: "{prefix}&cInvalid money operation: %operation%"
+      invalid_points_operation: "{prefix}&cInvalid points operation: %operation%"
+      unknown_action: "{prefix}&cUnknown action: %action%"
+      error: "{prefix}&cError executing action: %action%"
     spawner:
       set_type_error: "{prefix}Cannot set spawner type: %error%"
       break_info: "{prefix}Player %player% used %tool_type% tool to mine a %entity_type% spawner, result: %result%, fail chance: %fail_chance%"

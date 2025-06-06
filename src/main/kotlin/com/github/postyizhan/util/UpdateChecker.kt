@@ -60,7 +60,7 @@ class UpdateChecker(private val plugin: PostSpawner, private val repository: Str
                 }
             } catch (e: Exception) {
                 // 发生异常
-                plugin.logger.warning("检查更新时发生错误: ${e.message}")
+                plugin.logger.warning("An error occurred while checking for updates: ${e.message}")
                 Bukkit.getScheduler().runTask(plugin, Runnable {
                     callback(false, currentVersion)
                 })
@@ -88,4 +88,4 @@ class UpdateChecker(private val plugin: PostSpawner, private val repository: Str
         
         return 0
     }
-} 
+}

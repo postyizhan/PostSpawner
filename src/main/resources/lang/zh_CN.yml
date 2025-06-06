@@ -27,6 +27,14 @@ system:
     update_url: "{prefix}&e请访问：&bhttps://github.com/postyizhan/PostSpawner/releases/latest &e获取最新版本"
     up_to_date: "{prefix}&a您使用的是最新版本！"
   debug:
+    action:
+      invalid_sound: "{prefix}&c无效的音效: %sound%"
+      invalid_item: "{prefix}&c无效的物品: %item%"
+      invalid_effect: "{prefix}&c无效的药水效果: %effect%"
+      invalid_money_operation: "{prefix}&c无效的经济操作: %operation%"
+      invalid_points_operation: "{prefix}&c无效的点券操作: %operation%"
+      unknown_action: "{prefix}&c未知的动作: %action%"
+      error: "{prefix}&c执行动作时发生错误: %action%"
     spawner:
       set_type_error: "{prefix}无法设置刷怪笼类型: %error%"
       break_info: "{prefix}玩家 %player% 使用%tool_type%工具挖掘了一个 %entity_type% 刷怪笼，结果: %result%，失败概率: %fail_chance%"

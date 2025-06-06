@@ -27,4 +27,4 @@ class PlayerJoinListener(private val plugin: PostSpawner) : Listener {
             }, 40L)  // 40 ticks = 2 seconds
         }
     }
-} 
+}

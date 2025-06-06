@@ -83,7 +83,7 @@ class SpawnerListener(private val plugin: PostSpawner) : Listener {
                 .replace("%entity_type%", entityType?.name ?: "UNKNOWN")
                 .replace("%result%", result)
                 .replace("%fail_chance%", failChance.toString())
-            plugin.logger.info(debugMessage)
+            plugin.server.consoleSender.sendMessage(MessageUtil.color(debugMessage))
         }
         
         // 处理结果
@@ -100,10 +100,27 @@ class SpawnerListener(private val plugin: PostSpawner) : Listener {
             // 创建带有实体类型的刷怪笼物品
             val spawner = ItemStack(Material.SPAWNER)
             val meta = spawner.itemMeta
-            meta?.setDisplayName(MessageUtil.color("&f${entityType?.name ?: "PIG"} &7刷怪笼"))
-            val lore = ArrayList<String>()
-            lore.add(MessageUtil.color("&7实体类型: &f${entityType?.name ?: "PIG"}"))
-            meta?.lore = lore
+            
+            // 从配置文件获取显示名称格式
+            val displayNameFormat = config.getString("spawner.display-name") ?: "&f%entity_type% &7刷怪笼"
+            meta?.setDisplayName(MessageUtil.color(
+                displayNameFormat.replace("%entity_type%", entityType?.name ?: "PIG"))
+            )
+            
+            // 从配置文件获取描述格式
+            val loreList = ArrayList<String>()
+            val loreFormat = config.getString("spawner.lore") ?: "&7实体类型: &f%entity_type%"
+            loreList.add(MessageUtil.color(loreFormat.replace("%entity_type%", entityType?.name ?: "PIG")))
+            
+            // 如果配置中有额外的 lore 行，添加它们
+            val additionalLore = config.getStringList("spawner.additional-lore")
+            for (loreLine in additionalLore) {
+                loreList.add(MessageUtil.color(
+                    loreLine.replace("%entity_type%", entityType?.name ?: "PIG"))
+                )
+            }
+            
+            meta?.lore = loreList
             spawner.itemMeta = meta
             
             // 掉落物品
@@ -165,24 +182,23 @@ class SpawnerListener(private val plugin: PostSpawner) : Listener {
                 entityType = EntityType.valueOf(entityTypeStr.replace("§f", "").replace("§7", ""))
                 
                 if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                    plugin.logger.info(
-                        MessageUtil.getMessage("system.debug.spawner.lore_found_type")
-                            .replace("%entity_type%", entityType.name)
-                    )
+                    val debugMessage = MessageUtil.getMessage("system.debug.spawner.lore_found_type")
+                        .replace("%entity_type%", entityType.name)
+                    plugin.server.consoleSender.sendMessage(MessageUtil.color(debugMessage))
                 }
             } catch (e: IllegalArgumentException) {
                 if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                    plugin.logger.warning(
-                        MessageUtil.getMessage("system.debug.spawner.invalid_type")
-                            .replace("%entity_type%", entityTypeStr)
-                    )
+                    val debugMessage = MessageUtil.getMessage("system.debug.spawner.invalid_type")
+                        .replace("%entity_type%", entityTypeStr)
+                    plugin.server.consoleSender.sendMessage(MessageUtil.color(debugMessage))
                 }
                 
                 entityType = EntityType.PIG // 默认为猪
             }
         } else {
             if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                plugin.logger.info(MessageUtil.getMessage("system.debug.spawner.default_type"))
+                val debugMessage = MessageUtil.getMessage("system.debug.spawner.default_type")
+                plugin.server.consoleSender.sendMessage(MessageUtil.color(debugMessage))
             }
         }
         
@@ -193,10 +209,9 @@ class SpawnerListener(private val plugin: PostSpawner) : Listener {
             blockState.update()
             
             if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                plugin.logger.info(
-                    MessageUtil.getMessage("system.debug.spawner.set_type_success")
-                        .replace("%entity_type%", entityType.name)
-                )
+                val debugMessage = MessageUtil.getMessage("system.debug.spawner.set_type_success")
+                    .replace("%entity_type%", entityType.name)
+                plugin.server.consoleSender.sendMessage(MessageUtil.color(debugMessage))
             }
             
             // 发送消息
@@ -208,11 +223,10 @@ class SpawnerListener(private val plugin: PostSpawner) : Listener {
             )
         } catch (e: Exception) {
             if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                plugin.logger.warning(
-                    MessageUtil.getMessage("system.debug.spawner.set_type_error")
-                        .replace("%error%", e.message ?: "未知错误")
-                )
+                val debugMessage = MessageUtil.getMessage("system.debug.spawner.set_type_error")
+                    .replace("%error%", e.message ?: "Unknown error")
+                plugin.server.consoleSender.sendMessage(MessageUtil.color(debugMessage))
             }
         }
     }
-} 
+}

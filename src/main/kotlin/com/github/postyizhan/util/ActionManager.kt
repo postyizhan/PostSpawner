@@ -88,7 +88,7 @@ class ActionManager(private val plugin: PostSpawner) {
                     val sound = Sound.valueOf(soundName)
                     player.playSound(player.location, sound, volume, pitch)
                 } catch (e: IllegalArgumentException) {
-                    plugin.logger.warning("无效的音效: $soundName")
+                    plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_sound").replace("%sound%", soundName))
                 }
             }
             
@@ -138,7 +138,7 @@ class ActionManager(private val plugin: PostSpawner) {
                     val item = ItemStack(material, amount)
                     player.world.dropItemNaturally(location, item)
                 } catch (e: IllegalArgumentException) {
-                    plugin.logger.warning("无效的物品: $itemName")
+                    plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemName))
                 }
             }
             
@@ -154,7 +154,7 @@ class ActionManager(private val plugin: PostSpawner) {
                     val item = ItemStack(material, amount)
                     player.inventory.addItem(item)
                 } catch (e: IllegalArgumentException) {
-                    plugin.logger.warning("无效的物品: $itemName")
+                    plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemName))
                 }
             }
             
@@ -169,10 +169,10 @@ class ActionManager(private val plugin: PostSpawner) {
                     if (potionEffect != null) {
                         player.addPotionEffect(PotionEffect(potionEffect, duration * 20, amplifier))
                     } else {
-                        plugin.logger.warning("无效的药水效果: $effectName")
+                        plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_effect").replace("%effect%", effectName))
                     }
                 } catch (e: Exception) {
-                    plugin.logger.warning("无效的药水效果: $effectName")
+                    plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_effect").replace("%effect%", effectName))
                 }
             }
             
@@ -185,6 +185,7 @@ class ActionManager(private val plugin: PostSpawner) {
                     "give" -> plugin.getHookManager().getVaultHook()?.giveMoney(player, amount)
                     "take" -> plugin.getHookManager().getVaultHook()?.takeMoney(player, amount)
                     "set" -> plugin.getHookManager().getVaultHook()?.setMoney(player, amount)
+                    else -> plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_money_operation").replace("%operation%", operation))
                 }
             }
             
@@ -197,15 +198,20 @@ class ActionManager(private val plugin: PostSpawner) {
                     "give" -> plugin.getHookManager().getPlayerPointsHook()?.givePoints(player, amount)
                     "take" -> plugin.getHookManager().getPlayerPointsHook()?.takePoints(player, amount)
                     "set" -> plugin.getHookManager().getPlayerPointsHook()?.setPoints(player, amount)
+                    else -> plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_points_operation").replace("%operation%", operation))
                 }
             }
             
+            else {
+                plugin.logger.warning(MessageUtil.getMessage("system.debug.action.unknown_action").replace("%action%", action))
+            }
+            
         } catch (e: Exception) {
-            plugin.logger.warning("执行动作时发生错误: $action")
-            plugin.logger.warning("错误信息: ${e.message}")
+            plugin.logger.warning(MessageUtil.getMessage("system.debug.action.error").replace("%action%", action))
+            plugin.logger.warning("Error details: ${e.message}")
             if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
                 e.printStackTrace()
             }
         }
     }
-} 
+}

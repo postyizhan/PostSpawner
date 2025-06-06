@@ -10,6 +10,11 @@ update-checker:
 # 语言设置 (目前支持: zh_CN, en_US)
 language: zh_CN
 
+# 消息相关
+messages:
+  version-info: "&8[&3Post&bSpawner&8] &7版本: &f%version%"
+  update-checking: "&8[&3Post&bSpawner&8] &7正在检查更新..."
+
 # 刷怪笼挖掘设置
 spawner:
   # 基础挖掘失败的概率 (0.0-1.0)
@@ -18,6 +23,17 @@ spawner:
   # 使用精准采集工具时减少的失败概率 (0.0-1.0)
   # 例如：基础失败率0.7，精准采集减少0.2，则使用精准采集时失败率为0.5
   silk-touch-bonus: 0.2
+  
+  # 刷怪笼物品显示名称格式（%entity_type% 会被替换为实体类型）
+  display-name: "&f%entity_type% &7刷怪笼"
+  
+  # 刷怪笼物品lore格式（%entity_type% 会被替换为实体类型）
+  lore: "&7实体类型: &f%entity_type%"
+  
+  # 额外的lore行（可选）
+  additional-lore:
+    - "&7由 &3Post&bSpawner &7提供"
+    - "&7右键放置"
   
   # 挖掘成功时执行的动作
   success-actions:
@@ -37,4 +53,4 @@ spawner:
     - "[buff] SPEED 10 1"
 
 # 调试模式
-debug: false
+debug: true

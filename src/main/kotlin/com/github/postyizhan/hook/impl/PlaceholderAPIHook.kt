@@ -28,8 +28,8 @@ class PlaceholderAPIHook(private val plugin: PostSpawner) {
             val setPlaceholdersMethod = placeholderAPIClass.getMethod("setPlaceholders", Player::class.java, String::class.java)
             return setPlaceholdersMethod.invoke(null, player, text) as String
         } catch (e: Exception) {
-            plugin.logger.warning("调用 PlaceholderAPI 失败: ${e.message}")
+            plugin.logger.warning("Failed to call PlaceholderAPI: ${e.message}")
             return text
         }
     }
-} 
+}

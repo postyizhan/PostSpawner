@@ -110,4 +110,4 @@ class ConfigManager(private val plugin: PostSpawner) {
         val file = configFiles[name] ?: return
         config.save(file)
     }
-} 
+}

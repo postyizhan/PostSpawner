@@ -41,7 +41,7 @@ class PlayerPointsHook(private val plugin: PostSpawner) {
             val giveMethod = api?.javaClass?.getMethod("give", java.util.UUID::class.java, Int::class.java)
             return giveMethod?.invoke(api, player.uniqueId, amount) as? Boolean ?: false
         } catch (e: Exception) {
-            plugin.logger.warning("调用 PlayerPoints API 失败: ${e.message}")
+            plugin.logger.warning("Failed to call PlayerPoints API: ${e.message}")
             return false
         }
     }
@@ -56,7 +56,7 @@ class PlayerPointsHook(private val plugin: PostSpawner) {
             val takeMethod = api?.javaClass?.getMethod("take", java.util.UUID::class.java, Int::class.java)
             return takeMethod?.invoke(api, player.uniqueId, amount) as? Boolean ?: false
         } catch (e: Exception) {
-            plugin.logger.warning("调用 PlayerPoints API 失败: ${e.message}")
+            plugin.logger.warning("Failed to call PlayerPoints API: ${e.message}")
             return false
         }
     }
@@ -71,7 +71,7 @@ class PlayerPointsHook(private val plugin: PostSpawner) {
             val setMethod = api?.javaClass?.getMethod("set", java.util.UUID::class.java, Int::class.java)
             return setMethod?.invoke(api, player.uniqueId, amount) as? Boolean ?: false
         } catch (e: Exception) {
-            plugin.logger.warning("调用 PlayerPoints API 失败: ${e.message}")
+            plugin.logger.warning("Failed to call PlayerPoints API: ${e.message}")
             return false
         }
     }
@@ -86,8 +86,9 @@ class PlayerPointsHook(private val plugin: PostSpawner) {
             val lookMethod = api?.javaClass?.getMethod("look", java.util.UUID::class.java)
             return lookMethod?.invoke(api, player.uniqueId) as? Int ?: 0
         } catch (e: Exception) {
-            plugin.logger.warning("调用 PlayerPoints API 失败: ${e.message}")
+            plugin.logger.warning("Failed to call PlayerPoints API: ${e.message}")
             return 0
         }
     }
 }
+ 

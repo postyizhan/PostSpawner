@@ -1,7 +1,8 @@
 package com.github.postyizhan.util
 
 import com.github.postyizhan.PostSpawner
-import org.bukkit.ChatColor
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.configuration.file.FileConfiguration
 
 /**
@@ -32,7 +33,7 @@ object MessageUtil {
      * 将消息中的颜色代码转换为颜色
      */
     fun color(message: String): String {
-        return ChatColor.translateAlternateColorCodes('&', message)
+        return message.replace('&', '§')
     }
 
     /**
@@ -41,7 +42,7 @@ object MessageUtil {
     fun getMessage(path: String): String {
         return lang.getString(path)
             ?.replace("{prefix}", prefix)
-            ?: "$prefix&c未找到消息: $path"
+            ?: "$prefix&cMessage not found: $path"
     }
 
     /**
@@ -50,7 +51,7 @@ object MessageUtil {
     fun getStringList(path: String): List<String> {
         val list = lang.getStringList(path)
         return if (list.isEmpty()) {
-            listOf("$prefix&c未找到消息列表: $path")
+            listOf("$prefix&cMessage list not found list not found: $path")
         } else {
             list.map { it.replace("{prefix}", prefix) }
         }
@@ -66,4 +67,4 @@ object MessageUtil {
         }
         return formatted.replace("{prefix}", prefix)
     }
-} 
+}
