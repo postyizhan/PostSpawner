@@ -94,37 +94,37 @@ class SpawnerListener(private val plugin: PostSpawner) : Listener {
                 plugin.getActionManager().executeActions(player, successActions, entityType, location)
             }
             
-            // 掉落刷怪笼 - 阻止默认掉落
-            event.isDropItems = false
+            // // 掉落刷怪笼 - 阻止默认掉落
+            // event.isDropItems = false
             
-            // 创建带有实体类型的刷怪笼物品
-            val spawner = ItemStack(Material.SPAWNER)
-            val meta = spawner.itemMeta
+            // // 创建带有实体类型的刷怪笼物品
+            // val spawner = ItemStack(Material.SPAWNER)
+            // val meta = spawner.itemMeta
             
-            // 从配置文件获取显示名称格式
-            val displayNameFormat = config.getString("spawner.display-name") ?: "&f%entity_type% &7刷怪笼"
-            meta?.setDisplayName(MessageUtil.color(
-                displayNameFormat.replace("%entity_type%", entityType?.name ?: "PIG"))
-            )
+            // // 从配置文件获取显示名称格式
+            // val displayNameFormat = config.getString("spawner.display-name") ?: "&f%entity_type% &7刷怪笼"
+            // meta?.setDisplayName(MessageUtil.color(
+            //     displayNameFormat.replace("%entity_type%", entityType?.name ?: "PIG"))
+            // )
             
-            // 从配置文件获取描述格式
-            val loreList = ArrayList<String>()
-            val loreFormat = config.getString("spawner.lore") ?: "&7实体类型: &f%entity_type%"
-            loreList.add(MessageUtil.color(loreFormat.replace("%entity_type%", entityType?.name ?: "PIG")))
+            // // 从配置文件获取描述格式
+            // val loreList = ArrayList<String>()
+            // val loreFormat = config.getString("spawner.lore") ?: "&7实体类型: &f%entity_type%"
+            // loreList.add(MessageUtil.color(loreFormat.replace("%entity_type%", entityType?.name ?: "PIG")))
             
-            // 如果配置中有额外的 lore 行，添加它们
-            val additionalLore = config.getStringList("spawner.additional-lore")
-            for (loreLine in additionalLore) {
-                loreList.add(MessageUtil.color(
-                    loreLine.replace("%entity_type%", entityType?.name ?: "PIG"))
-                )
-            }
+            // // 如果配置中有额外的 lore 行，添加它们
+            // val additionalLore = config.getStringList("spawner.additional-lore")
+            // for (loreLine in additionalLore) {
+            //     loreList.add(MessageUtil.color(
+            //         loreLine.replace("%entity_type%", entityType?.name ?: "PIG"))
+            //     )
+            // }
             
-            meta?.lore = loreList
-            spawner.itemMeta = meta
+            // meta?.lore = loreList
+            // spawner.itemMeta = meta
             
-            // 掉落物品
-            player.world.dropItemNaturally(location, spawner)
+            // // 掉落物品
+            // player.world.dropItemNaturally(location, spawner)
             
         } else {
             // 执行失败动作

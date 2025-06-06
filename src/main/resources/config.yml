@@ -34,6 +34,7 @@ spawner:
   success-actions:
     - "[message] &a成功挖掘了刷怪笼！"
     - "[sound] BLOCK_NOTE_BLOCK_PLING 1.0 1.0"
+    - "[drop_monster_spawner]"
 
   # 挖掘失败时执行的动作
   fail-actions:
