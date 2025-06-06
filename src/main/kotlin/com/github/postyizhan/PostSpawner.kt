@@ -72,13 +72,13 @@ class PostSpawner : JavaPlugin() {
             }
         }
 
-        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &a插件已成功加载. &7版本: &f${description.version}"))
+        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &aPlugin loaded successfully. &7version: &f${description.version} &7author: &fpostyizhan"))
     }
 
     override fun onDisable() {
         HandlerList.unregisterAll(this)
         server.consoleSender.sendMessage(MessageUtil.color(MessageUtil.getMessage("messages.disabled")))
-        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &c插件已成功卸载."))
+        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &cPlugin disabled."))
     }
     
     /**

@@ -46,10 +46,13 @@ class CommandManager(private val plugin: PostSpawner) : CommandExecutor, TabComp
                     sender.sendMessage(MessageUtil.color(MessageUtil.getMessage("messages.no-permission")))
                     return true
                 }
-                // 从配置文件读取版本信息格式
-                val versionFormat = plugin.getConfigManager().getConfig().getString("messages.version-info")
-                    ?: "&8[&3Post&bSpawner&8] &7版本: &f%version%"
-                sender.sendMessage(MessageUtil.color(versionFormat.replace("%version%", plugin.description.version)))
+                sender.sendMessage(MessageUtil.color("&3Post&bSpawner &8| &fv${plugin.description.version}"))
+                sender.sendMessage(MessageUtil.color("&7A lightweight Minecraft plugin for managing Monster Spawner "))
+                sender.sendMessage(MessageUtil.color("&7"))
+                sender.sendMessage(MessageUtil.color("&f• Author: &7postyizhan"))
+                sender.sendMessage(MessageUtil.color("&f• GitHub: &7https://github.com/postyizhan/PostSpawner"))
+                sender.sendMessage(MessageUtil.color("&f• Discord: &7https://discord.com/invite/jN4Br8uhSS"))
+                sender.sendMessage(MessageUtil.color("&f• QQ Group: &7611076407"))
             }
             
             "help" -> {
@@ -67,8 +70,8 @@ class CommandManager(private val plugin: PostSpawner) : CommandExecutor, TabComp
                     return true
                 }
                 // 从配置文件读取检查更新提示
-                val updateChecking = plugin.getConfigManager().getConfig().getString("messages.update-checking")
-                    ?: "&8[&3Post&bSpawner&8] &7正在检查更新..."
+                val updateChecking = plugin.getConfigManager().getConfig().getString("system.updater.update_checking")
+                    ?: "&8[&3Post&bSpawner&8] &7Checking for updates..."
                 sender.sendMessage(MessageUtil.color(updateChecking))
                 if (sender is Player) {
                     plugin.sendUpdateInfo(sender)
