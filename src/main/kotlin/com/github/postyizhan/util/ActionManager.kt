@@ -134,33 +134,53 @@ class ActionManager(private val plugin: PostSpawner) {
             
             else if (action.startsWith("[drop]") && location != null) {
                 val parts = action.substring("[drop]".length).trim().split(" ")
-                val itemName = parts[0]
+                val itemId = parts[0]
                 val amount = if (parts.size > 1) parts[1].toIntOrNull() ?: 1 else 1
                 
-                // 处理自定义物品库，暂时不实现
-                // 检查是否是原版物品
-                try {
-                    val material = Material.valueOf(itemName.uppercase())
-                    val item = ItemStack(material, amount)
+                // 从物品钩子获取物品
+                val item = plugin.getHookManager().getItem(itemId, player)
+                if (item != null) {
+                    item.amount = amount
                     player.world.dropItemNaturally(location, item)
-                } catch (e: IllegalArgumentException) {
-                    plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemName))
+                } else {
+                    // 尝试作为原版物品处理
+                    try {
+                        val material = Material.matchMaterial(itemId)
+                        if (material != null) {
+                            val vanillaItem = ItemStack(material, amount)
+                            player.world.dropItemNaturally(location, vanillaItem)
+                        } else {
+                            plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemId))
+                        }
+                    } catch (e: Exception) {
+                        plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemId))
+                    }
                 }
             }
             
             else if (action.startsWith("[give]")) {
                 val parts = action.substring("[give]".length).trim().split(" ")
-                val itemName = parts[0]
+                val itemId = parts[0]
                 val amount = if (parts.size > 1) parts[1].toIntOrNull() ?: 1 else 1
                 
-                // 处理自定义物品库，暂时不实现
-                // 检查是否是原版物品
-                try {
-                    val material = Material.valueOf(itemName.uppercase())
-                    val item = ItemStack(material, amount)
+                // 从物品钩子获取物品
+                val item = plugin.getHookManager().getItem(itemId, player)
+                if (item != null) {
+                    item.amount = amount
                     player.inventory.addItem(item)
-                } catch (e: IllegalArgumentException) {
-                    plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemName))
+                } else {
+                    // 尝试作为原版物品处理
+                    try {
+                        val material = Material.matchMaterial(itemId)
+                        if (material != null) {
+                            val vanillaItem = ItemStack(material, amount)
+                            player.inventory.addItem(vanillaItem)
+                        } else {
+                            plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemId))
+                        }
+                    } catch (e: Exception) {
+                        plugin.logger.warning(MessageUtil.getMessage("system.debug.action.invalid_item").replace("%item%", itemId))
+                    }
                 }
             }
             

@@ -5,6 +5,20 @@ api-version: '1.21'
 description: A lightweight Minecraft plugin for managing Monster Spawner
 author: postyizhan
 website: https://github.com/postyizhan/PostSpawner
+softdepend:
+  - Vault
+  - PlayerPoints
+  - PlaceHolderAPI
+  - ItemsAdder
+  - Oraxen
+  - MMOItems
+  - NeigeItems
+  - MythicMobs
+  - Zaphkiel
+  - CraftEngine
+  - ItemTools
+  - AzureFlow
+  - SX-Item
 
 commands:
   ps:
