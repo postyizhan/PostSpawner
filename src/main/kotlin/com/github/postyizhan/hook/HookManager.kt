@@ -50,13 +50,6 @@ class HookManager(private val plugin: PostSpawner) {
                     )
                 )
             }
-        } else {
-            plugin.server.consoleSender.sendMessage(
-                MessageUtil.color(
-                    MessageUtil.getMessage("system.hooks.disabled")
-                        .replace("{0}", "Vault")
-                )
-            )
         }
     }
 
@@ -69,13 +62,6 @@ class HookManager(private val plugin: PostSpawner) {
             plugin.server.consoleSender.sendMessage(
                 MessageUtil.color(
                     MessageUtil.getMessage("system.hooks.enabled")
-                        .replace("{0}", "PlayerPoints")
-                )
-            )
-        } else {
-            plugin.server.consoleSender.sendMessage(
-                MessageUtil.color(
-                    MessageUtil.getMessage("system.hooks.disabled")
                         .replace("{0}", "PlayerPoints")
                 )
             )
@@ -110,19 +96,10 @@ class HookManager(private val plugin: PostSpawner) {
     private fun setupItemSource() {
         try {
             itemSourceHookManager = ItemSourceHookManager(plugin)
-            plugin.server.consoleSender.sendMessage(
-                MessageUtil.color(
-                    MessageUtil.getMessage("system.hooks.enabled")
-                        .replace("{0}", "Item Source Manager")
-                )
-            )
         } catch (e: Exception) {
-            plugin.server.consoleSender.sendMessage(
-                MessageUtil.color(
-                    MessageUtil.getMessage("system.hooks.disabled")
-                        .replace("{0}", "Item Source Manager")
-                )
-            )
+            if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
+                plugin.logger.warning("Failed to initialize item source manager: ${e.message}")
+            }
         }
     }
 

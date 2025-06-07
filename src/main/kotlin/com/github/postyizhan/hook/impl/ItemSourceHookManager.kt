@@ -29,7 +29,7 @@ class ItemSourceHookManager(private val plugin: PostSpawner) {
         tryRegisterSource(SXItemItemSource(), "SX-Item")
         tryRegisterSource(ZaphkielItemSource(), "Zaphkiel")
         tryRegisterSource(CraftEngineItemSource(), "CraftEngine")
-        tryRegisterReflectionSource(AzureFlowItemSource(), "AzureFlow")
+        tryRegisterSource(AzureFlowItemSource(), "AzureFlow")
     }
     
     /**
@@ -40,53 +40,29 @@ class ItemSourceHookManager(private val plugin: PostSpawner) {
             // 检查插件是否存在
             if (plugin.server.pluginManager.getPlugin(pluginName) == null) {
                 if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                    plugin.logger.info("$pluginName 未找到，跳过相关物品源注册")
+                    plugin.logger.info("$pluginName not found, skipping item source registration")
                 }
                 return
             }
             
             registerSource(source)
-            plugin.logger.info("成功注册 $pluginName 物品源")
+            if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
+                plugin.logger.info("Successfully registered $pluginName item source")
+            }
             plugin.server.consoleSender.sendMessage(
                 MessageUtil.color(
                     MessageUtil.getMessage("system.hooks.enabled")
-                        .replace("{0}", pluginName + " Item Source")
+                        .replace("{0}", pluginName)
                 )
             )
         } catch (e: Exception) {
             if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                plugin.logger.log(Level.WARNING, "注册 $pluginName 物品源失败", e)
+                plugin.logger.log(Level.WARNING, "Failed to register $pluginName item source", e)
             }
             plugin.server.consoleSender.sendMessage(
                 MessageUtil.color(
                     MessageUtil.getMessage("system.hooks.disabled")
-                        .replace("{0}", pluginName + " Item Source")
-                )
-            )
-        }
-    }
-    
-    /**
-     * 尝试注册使用反射的物品源（不检查插件是否存在）
-     */
-    private fun tryRegisterReflectionSource(source: ItemSourceHook, sourceName: String) {
-        try {
-            registerSource(source)
-            plugin.logger.info("成功注册 $sourceName 物品源")
-            plugin.server.consoleSender.sendMessage(
-                MessageUtil.color(
-                    MessageUtil.getMessage("system.hooks.enabled")
-                        .replace("{0}", sourceName + " Item Source")
-                )
-            )
-        } catch (e: Exception) {
-            if (plugin.getConfigManager().getConfig().getBoolean("debug", false)) {
-                plugin.logger.log(Level.WARNING, "注册 $sourceName 物品源失败", e)
-            }
-            plugin.server.consoleSender.sendMessage(
-                MessageUtil.color(
-                    MessageUtil.getMessage("system.hooks.disabled")
-                        .replace("{0}", sourceName + " Item Source")
+                        .replace("{0}", pluginName)
                 )
             )
         }
@@ -150,14 +126,14 @@ class ItemSourceHookManager(private val plugin: PostSpawner) {
             // 查找对应的物品源
             val source = sources.find { it.getSourceId() == sourceId }
             if (source == null) {
-                plugin.logger.warning("未知的物品源: $sourceId")
+                plugin.logger.warning("Unknown item source: $sourceId")
                 return null
             }
             
             // 获取物品
             val item = source.getItem(itemId, player)
             if (item == null) {
-                plugin.logger.warning("未找到物品: $sourceId:$itemId")
+                plugin.logger.warning("Item not found: $sourceId:$itemId")
                 return null
             }
             
@@ -166,7 +142,7 @@ class ItemSourceHookManager(private val plugin: PostSpawner) {
             
             return item
         } catch (e: Exception) {
-            plugin.logger.log(Level.WARNING, "获取物品失败: $itemString", e)
+            plugin.logger.log(Level.WARNING, "Failed to get item: $itemString", e)
             return null
         }
     }
