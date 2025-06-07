@@ -38,6 +38,9 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.6")
     
     // PlayerPoints API - 通过反射调用
+    
+    // bStats
+    implementation("org.bstats:bstats-bukkit:3.0.2")
 }
 
 tasks {
@@ -52,6 +55,9 @@ tasks {
         archiveBaseName.set("PostSpawner")
         archiveClassifier.set("")
         archiveVersion.set(project.version.toString())
+        
+        // 重定位bStats类
+        relocate("org.bstats", "com.github.postyizhan.util.bstats")
     }
 }
 

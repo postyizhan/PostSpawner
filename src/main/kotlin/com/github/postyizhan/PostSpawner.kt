@@ -8,6 +8,7 @@ import com.github.postyizhan.listener.SpawnerListener
 import com.github.postyizhan.util.ActionManager
 import com.github.postyizhan.util.MessageUtil
 import com.github.postyizhan.util.UpdateChecker
+import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.HandlerList
@@ -48,6 +49,10 @@ class PostSpawner : JavaPlugin() {
         // 注册命令
         commandManager = CommandManager(this)
         commandManager.registerCommands()
+        
+        // 初始化bStats统计
+        val pluginId = 26108
+        Metrics(this, pluginId)
         
         // 初始化更新检查器
         updateChecker = UpdateChecker(this, "postyizhan/PostSpawner")
