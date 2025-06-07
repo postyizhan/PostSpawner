@@ -7,7 +7,7 @@ update-checker:
   # 检查频率（天）
   check-interval-days: 1
 
-# 语言设置 (目前支持: zh_CN, en_US)
+# 语言 支持的语言：https://github.com/postyizhan/PostSpawner/tree/main/src/main/resources/lang
 language: zh_CN
 
 # 刷怪笼挖掘设置
