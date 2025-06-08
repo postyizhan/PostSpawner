@@ -7,6 +7,7 @@ import com.github.postyizhan.listener.PlayerJoinListener
 import com.github.postyizhan.listener.SpawnerListener
 import com.github.postyizhan.util.ActionManager
 import com.github.postyizhan.util.MessageUtil
+import com.github.postyizhan.util.MiniMessageUtil
 import com.github.postyizhan.util.UpdateChecker
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
@@ -77,13 +78,34 @@ class PostSpawner : JavaPlugin() {
             }
         }
 
-        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &aPlugin loaded successfully. &7version: &f${description.version} &7author: &fpostyizhan"))
+        // 输出启动消息
+        // 同时支持传统格式和MiniMessage格式
+        val startupMessage = "&8[&3Post&bSpawner&8] &a插件加载成功。 &7版本: &f${description.version} &7作者: &fpostyizhan"
+        
+        if (MessageUtil.isUsingMiniMessage()) {
+            MiniMessageUtil.sendMessage(server.consoleSender, MessageUtil.process(startupMessage))
+        } else {
+            server.consoleSender.sendMessage(MessageUtil.color(startupMessage))
+        }
     }
 
     override fun onDisable() {
         HandlerList.unregisterAll(this)
-        server.consoleSender.sendMessage(MessageUtil.color(MessageUtil.getMessage("messages.disabled")))
-        server.consoleSender.sendMessage(MessageUtil.color("&8[&3Post&bSpawner&8] &cPlugin disabled."))
+        
+        // 关闭MiniMessage
+        try {
+            MiniMessageUtil.shutdown()
+        } catch (e: Exception) {
+            logger.warning("Failed to shutdown MiniMessage: ${e.message}")
+        }
+        
+        // 输出关闭消息
+        val disabledMessage = MessageUtil.getMessage("messages.disabled")
+        if (MessageUtil.isUsingMiniMessage()) {
+            MiniMessageUtil.sendMessage(server.consoleSender, MessageUtil.process(disabledMessage))
+        } else {
+            server.consoleSender.sendMessage(MessageUtil.color(disabledMessage))
+        }
     }
     
     /**
@@ -100,18 +122,19 @@ class PostSpawner : JavaPlugin() {
     fun sendUpdateInfo(player: Player) {
         updateChecker.checkForUpdates { isUpdateAvailable, newVersion ->
             if (isUpdateAvailable) {
-                player.sendMessage(MessageUtil.color(
-                    MessageUtil.getMessage("system.updater.update_available")
-                        .replace("{current_version}", description.version)
-                        .replace("{latest_version}", newVersion)
-                ))
-                player.sendMessage(MessageUtil.color(
-                    MessageUtil.getMessage("system.updater.update_url")
-                        .replace("{current_version}", description.version)
-                        .replace("{latest_version}", newVersion)
-                ))
+                val updateAvailableMsg = MessageUtil.getMessage("system.updater.update_available")
+                    .replace("{current_version}", description.version)
+                    .replace("{latest_version}", newVersion)
+                
+                val updateUrlMsg = MessageUtil.getMessage("system.updater.update_url")
+                    .replace("{current_version}", description.version)
+                    .replace("{latest_version}", newVersion)
+                
+                MessageUtil.sendMessage(player, updateAvailableMsg)
+                MessageUtil.sendMessage(player, updateUrlMsg)
             } else {
-                player.sendMessage(MessageUtil.color(MessageUtil.getMessage("system.updater.up_to_date")))
+                val upToDateMsg = MessageUtil.getMessage("system.updater.up_to_date")
+                MessageUtil.sendMessage(player, upToDateMsg)
             }
         }
     }

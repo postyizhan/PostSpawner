@@ -10,6 +10,10 @@ update-checker:
 # 语言 支持的语言：https://github.com/postyizhan/PostSpawner/tree/main/src/main/resources/lang
 language: zh_CN
 
+# 是否启用MiniMessage格式
+# 启用后仍支持传统&颜色代码，两种格式可共存
+use-minimessage: true
+
 # 刷怪笼挖掘设置
 spawner:
   # 基础挖掘失败的概率 (0.0-1.0)

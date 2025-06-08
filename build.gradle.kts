@@ -43,6 +43,11 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    // Adventure API (MiniMessage支持)
+    implementation("net.kyori:adventure-api:4.20.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.4") 
+    implementation("net.kyori:adventure-text-minimessage:4.20.0")
+
     // Vault API
     compileOnly("com.github.MilkBowl:VaultAPI:1.7") {
         exclude(group = "org.bukkit", module = "bukkit")
@@ -91,6 +96,8 @@ tasks {
         
         // 重定位bStats类
         relocate("org.bstats", "com.github.postyizhan.util.bstats")
+        // 重定位Adventure API
+        relocate("net.kyori", "com.github.postyizhan.util.kyori")
     }
 }
 
