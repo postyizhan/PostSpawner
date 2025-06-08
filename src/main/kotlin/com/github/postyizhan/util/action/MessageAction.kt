@@ -18,7 +18,7 @@ class MessageAction(private val plugin: PostSpawner) : Action {
             MiniMessageUtil.sendMessage(player, MessageUtil.process(message))
         } else {
             // 使用传统格式
-            player.sendMessage(MessageUtil.color(message))
+        player.sendMessage(MessageUtil.color(message))
         }
     }
 }

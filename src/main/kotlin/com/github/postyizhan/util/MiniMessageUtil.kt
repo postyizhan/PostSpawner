@@ -7,6 +7,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import com.github.postyizhan.PostSpawner
+import java.util.concurrent.TimeUnit
 
 /**
  * MiniMessage工具类，用于处理MiniMessage格式的文本
@@ -109,17 +110,24 @@ class MiniMessageUtil {
          * @param fadeOut 淡出时间（单位：tick）
          */
         fun sendTitle(player: Player, title: String, subtitle: String, fadeIn: Int, stay: Int, fadeOut: Int) {
-            audiences.player(player).showTitle(
-                net.kyori.adventure.title.Title.title(
-                    parse(title),
-                    parse(subtitle),
-                    net.kyori.adventure.title.Title.Times.times(
-                        java.time.Duration.ofMillis((fadeIn * 50).toLong()),
-                        java.time.Duration.ofMillis((stay * 50).toLong()),
-                        java.time.Duration.ofMillis((fadeOut * 50).toLong())
-                    )
-                )
+            // 适配Java 8和Spigot 1.13版本的标题展示
+            val titleComponent = parse(title)
+            val subtitleComponent = parse(subtitle)
+            
+            // 使用适配1.13版本的方式创建Title对象
+            val titleTimes = net.kyori.adventure.title.Title.Times.of(
+                java.time.Duration.ofMillis((fadeIn * 50).toLong()),
+                java.time.Duration.ofMillis((stay * 50).toLong()),
+                java.time.Duration.ofMillis((fadeOut * 50).toLong())
             )
+            
+            val titleObj = net.kyori.adventure.title.Title.title(
+                titleComponent,
+                subtitleComponent,
+                titleTimes
+            )
+            
+            audiences.player(player).showTitle(titleObj)
         }
     }
 }

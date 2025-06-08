@@ -1,7 +1,7 @@
 # PostSpawner
 
 ![版本](https://img.shields.io/github/v/release/postyizhan/PostSpawner?color=blue&label=版本)
-![Minecraft](https://img.shields.io/badge/Minecraft-1.21+-green)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.13+-green)
 ![语言](https://img.shields.io/badge/语言-简体中文|English-orange)
 
 PostSpawner 是一个轻量级的 Minecraft 刷怪笼管理插件，提供了对刷怪笼的挖掘和放置的管理功能。

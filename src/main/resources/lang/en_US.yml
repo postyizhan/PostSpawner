@@ -5,7 +5,7 @@ messages:
   no-permission: "{prefix}&7You don't have permission to execute this command!"
   invalid-command: "{prefix}&7Invalid command! Use &7/ps help &7to see help."
   help:
-    - "{prefix}&a===== PostSpawner Help ====="
+    - "{prefix}&a===== {prefix} &a====="
     - "{prefix}&7/ps reload &f- Reload the plugin"
     - "{prefix}&7/ps version &f- Show version info"
     - "{prefix}&7/ps help &f- Show help information"
@@ -25,7 +25,7 @@ system:
     update_checking: "{prefix}&7Checking for updates..."
     update_available: "{prefix}&eNew version available! Current version: &c{current_version}&e, Latest version: &a{latest_version}"
     update_url: "{prefix}&eVisit: &bhttps://github.com/postyizhan/PostSpawner/releases/latest &eto get the latest version"
-    up_to_date: "{prefix}&aYou are using the latest version!"
+    up_to_date: "{prefix}&7You are using the latest version!"
   debug:
     action:
       invalid_sound: "{prefix}&cInvalid sound: %sound%"

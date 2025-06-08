@@ -48,7 +48,7 @@ class ActionManager(private val plugin: PostSpawner) {
             result = result.replace("%block_x%", location.blockX.toString())
             result = result.replace("%block_y%", location.blockY.toString())
             result = result.replace("%block_z%", location.blockZ.toString())
-            result = result.replace("%block_world%", location.world.name)
+            result = result.replace("%block_world%", location.world?.name ?: "unknown")
         }
         
         // 如果启用了PlaceholderAPI，则替换其占位符

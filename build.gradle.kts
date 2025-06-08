@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.2.0-RC2"
+    kotlin("jvm") version "1.8.21"
     id("com.gradleup.shadow") version "8.3.0"
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
@@ -9,8 +9,8 @@ version = "1.4"
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "papermc-repo"
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
+        name = "spigot-repo"
     }
     maven("https://oss.sonatype.org/content/groups/public/") {
         name = "sonatype"
@@ -40,13 +40,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // Adventure API (MiniMessage支持)
-    implementation("net.kyori:adventure-api:4.20.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.4") 
-    implementation("net.kyori:adventure-text-minimessage:4.20.0")
+    implementation("net.kyori:adventure-api:4.14.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.0") 
+    implementation("net.kyori:adventure-text-minimessage:4.14.0")
 
     // Vault API
     compileOnly("com.github.MilkBowl:VaultAPI:1.7") {
@@ -71,11 +71,13 @@ dependencies {
     // 本地libs目录依赖 - 这些API只在编译时使用，运行时由插件提供
     compileOnly(files(
         "libs/AzureFlow-1.0.2.4-rc1-build-41212-all.min.jar",
-        "libs/SX-Item-3.2.4-all.min.jar",
-        "libs/Ratziel-A.0.4.2.0.jar",
-        "libs/ItemTools-3.0.2-api.jar"
+        "libs/SX-Item-3.2.4-all.min.jar"
         )
     )
+    
+    // 暂时注释掉不兼容的Kotlin库
+    // "libs/Ratziel-A.0.4.2.0.jar",
+    // "libs/ItemTools-3.0.2-api.jar"
     
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.2")
@@ -83,10 +85,8 @@ dependencies {
 
 tasks {
     runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21")
+        // 修改Minecraft版本
+        minecraftVersion("1.13.2")
     }
     
     shadowJar {
@@ -101,7 +101,7 @@ tasks {
     }
 }
 
-val targetJavaVersion = 21
+val targetJavaVersion = 8
 kotlin {
     jvmToolchain(targetJavaVersion)
 }

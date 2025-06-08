@@ -123,12 +123,12 @@ class PostSpawner : JavaPlugin() {
         updateChecker.checkForUpdates { isUpdateAvailable, newVersion ->
             if (isUpdateAvailable) {
                 val updateAvailableMsg = MessageUtil.getMessage("system.updater.update_available")
-                    .replace("{current_version}", description.version)
-                    .replace("{latest_version}", newVersion)
+                        .replace("{current_version}", description.version)
+                        .replace("{latest_version}", newVersion)
                 
                 val updateUrlMsg = MessageUtil.getMessage("system.updater.update_url")
-                    .replace("{current_version}", description.version)
-                    .replace("{latest_version}", newVersion)
+                        .replace("{current_version}", description.version)
+                        .replace("{latest_version}", newVersion)
                 
                 MessageUtil.sendMessage(player, updateAvailableMsg)
                 MessageUtil.sendMessage(player, updateUrlMsg)

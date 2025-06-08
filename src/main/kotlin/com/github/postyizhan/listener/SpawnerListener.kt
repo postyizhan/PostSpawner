@@ -98,7 +98,7 @@ class SpawnerListener(private val plugin: PostSpawner) : Listener {
             // event.isDropItems = false
             
             // // 创建带有实体类型的刷怪笼物品
-            // val spawner = ItemStack(Material.SPAWNER)
+            // val spawner = ItemStack(Material.MOB_SPAWNER)
             // val meta = spawner.itemMeta
             
             // // 从配置文件获取显示名称格式
