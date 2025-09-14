@@ -45,7 +45,7 @@ dependencies {
 
     // Adventure API (MiniMessage支持)
     implementation("net.kyori:adventure-api:4.14.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0") 
+    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
     implementation("net.kyori:adventure-text-minimessage:4.14.0")
 
     // Vault API
@@ -86,7 +86,7 @@ dependencies {
 tasks {
     runServer {
         // 修改Minecraft版本
-        minecraftVersion("1.13.2")
+        minecraftVersion("1.13")
     }
     
     shadowJar {

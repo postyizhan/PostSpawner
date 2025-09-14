@@ -5,7 +5,7 @@ messages:
   no-permission: "{prefix}&7You don't have permission to execute this command!"
   invalid-command: "{prefix}&7Invalid command! Use &7/ps help &7to see help."
   help:
-    - "{prefix}&a===== {prefix} &a====="
+    - "{prefix}"
     - "{prefix}&7/ps reload &f- Reload the plugin"
     - "{prefix}&7/ps version &f- Show version info"
     - "{prefix}&7/ps help &f- Show help information"
@@ -21,6 +21,7 @@ messages:
 system:
   hooks:
     enabled: "{prefix}&7Successfully loaded support for &f{0} &7plugin"
+    disabled: "{prefix}&7Failed to load support for &f{0} &7plugin"
   updater:
     update_checking: "{prefix}&7Checking for updates..."
     update_available: "{prefix}&eNew version available! Current version: &c{current_version}&e, Latest version: &a{latest_version}"

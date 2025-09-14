@@ -79,7 +79,6 @@ class PostSpawner : JavaPlugin() {
         }
 
         // 输出启动消息
-        // 同时支持传统格式和MiniMessage格式
         val startupMessage = "&8[&3Post&bSpawner&8] &a插件加载成功。 &7版本: &f${description.version} &7作者: &fpostyizhan"
         
         if (MessageUtil.isUsingMiniMessage()) {
